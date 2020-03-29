@@ -1,12 +1,13 @@
 class Ship {
     constructor() {
-        this.startingPort = 'Lisbon';
+        this.currentPort = 'Lisbon';
         this.passengerCount = 0;
     }
 
-    boardPassenger() {
-        this.passengerCount += 1;
+    setSail() {
+        this.currentPort = '';
     }
+
 }
 
 module.exports = Ship;
