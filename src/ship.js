@@ -9,11 +9,11 @@ class Ship {
     }
 
     dock(port) {
-        if(port === undefined){
-            return this.currentPort = 'Out at sea';
+        if(port === undefined || !port instanceof Object){
+            return this.currentPort = '';
         }
         
-        this.currentPort = port.name   
+        this.currentPort = port.name;
     }
 
 }

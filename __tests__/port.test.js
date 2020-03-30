@@ -3,7 +3,7 @@ let testPort;
 
 beforeEach(() => {
     testPort = new Port();
-});
+})
 
 describe('constructor', () => {
     it('should create a new object', () => {
