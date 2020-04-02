@@ -1,11 +1,15 @@
 const Ship = require('../src/ship');
 const Port = require('../src/port');
+const Itinerary = require('../src/itinerary');
+
+let testItinerary;
 let testShip;
 let lisbon;
 
 beforeEach(() => {
     lisbon = new Port('Lisbon');
-    testShip = new Ship(lisbon);
+    testItinerary = new Itinerary([lisbon]);
+    testShip = new Ship(testItinerary);
 });
 
 describe('constructor', () => {
@@ -13,8 +17,12 @@ describe('constructor', () => {
         expect( testShip ).toBeInstanceOf( Object );
     })
 
+    it('should have a previousPort property of null', () => {
+        expect( testShip.previousPort ).toBe( null );
+    })
+
     it('should have a currentPort property of Lisbon', () => {
-        expect( testShip.currentPort ).toBe( lisbon.name );
+        expect( testShip.currentPort ).toEqual(lisbon);
     })
 
     it('should have a starting passengerCount property of 0', () => {
@@ -28,21 +36,27 @@ describe('setSail', () => {
 
         expect( testShip.currentPort ).toBeFalsy();
     })
+
+    it('should set previousPort to currentPort and currentPort to "" when sailing', () => {
+        testShip.currentPort = 'Marseilles'
+
+        testShip.setSail();
+
+        expect( testShip.previousPort ).toBe('Marseilles');
+        expect(testShip.currentPort).toBeFalsy();
+    })
 })
 
 describe('dock', () => {
-    it('should set currentPort to new port name of "Marseilles"', () => {
-        testShip.currentPort = 'Lisbon';
+    it('should be able to dock at a different port', () => {
+        const lisbon = new Port('Lisbon');
         const marseilles = new Port('Marseilles');
+        const itinerary = new Itinerary([lisbon, marseilles]);
+        const ship = new Ship(itinerary);
 
-        testShip.dock(marseilles);
+        ship.setSail();
+        ship.dock();
 
-        expect( testShip.currentPort ).toBe( 'Marseilles' );
-    })
-
-    it('should set currentPort to be falsy when no port object passed', () => {
-        testShip.dock();
-
-        expect( testShip.currentPort ).toBeFalsy();
+        expect(ship.currentPort).toEqual(marseilles);
     })
 })
