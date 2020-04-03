@@ -23,7 +23,7 @@ describe('ports', () => {
 
         testItinerary.ports = [marseilles, nice];
 
-        expect( testItinerary.ports ).toEqual([{name: 'Marseilles'}, {name: 'Nice'}]);
+        expect( testItinerary.ports ).toEqual([marseilles, nice]);
     })
 
     it('should have a ports property', () => {
