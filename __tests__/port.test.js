@@ -6,6 +6,7 @@ let testPort;
 
 beforeEach(() => {
     testPort = new Port('Lisbon');
+    testPort.ships = [];
 })
 
 describe('constructor', () => {
@@ -19,7 +20,7 @@ describe('constructor', () => {
 
     it('should have a name of "Unknown Port" when not specified', () => {
         const unknownPort = new Port();
-        
+
         expect( unknownPort.name ).toBe( 'Unknown Port' );
     })
 
@@ -33,7 +34,33 @@ describe('addShip', () => {
         const itinerary = new Itinerary([testPort]);
         const ship = new Ship(itinerary);
 
-        ship.dock();
+        testPort.addShip(ship);
+
+        expect(testPort.ships).toEqual([ship, ship])
+    })
+
+    it('should do nothing if no ship is passed in', () => {
+        testPort.addShip();
+
+        expect(testPort.ships).toEqual([])
+    })
+    
+    it('should do nothing if an integer is passed in', () => {
+        testPort.addShip(5);
+
+        expect(testPort.ships).toEqual([])
+    })
+
+    it('should do nothing if a string is passed in', () => {
+        testPort.addShip('blahblah');
+
+        expect(testPort.ships).toEqual([])
+    })
+})
+
+describe('removeShip', () => {
+    it('should remove a ship to the port', () => {
+        testPort.removeShip();
 
         expect(testPort.ships).toEqual([])
     })

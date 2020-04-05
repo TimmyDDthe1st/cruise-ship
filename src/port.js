@@ -1,7 +1,21 @@
 class Port {
-    constructor(port) {
-        this.name = port || 'Unknown Port';
+    constructor(name) {
+        this.name = name || 'Unknown Port';
         this.ships = [];
+    }
+
+    addShip(ship) {
+        if(ship === null || ship === undefined) {
+            return;
+        }
+
+        if(ship instanceof Object) {
+            this.ships.push(ship);
+        }
+    }
+
+    removeShip() {
+        this.ships.pop();
     }
 
 }

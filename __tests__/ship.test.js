@@ -4,11 +4,17 @@ const Itinerary = require('../src/itinerary');
 
 let testItinerary;
 let testShip;
-let lisbon;
+let marseilles;
+let nice;
+let genoa;
+let livorno;
 
 beforeEach(() => {
-    lisbon = new Port('Lisbon');
-    testItinerary = new Itinerary([lisbon]);
+    marseilles = new Port('Marseilles');
+    nice = new Port('Nice');
+    genoa = new Port('Genoa')
+    livorno = new Port('Livorno');
+    testItinerary = new Itinerary([marseilles, nice, genoa]);
     testShip = new Ship(testItinerary);
 });
 
@@ -21,8 +27,12 @@ describe('constructor', () => {
         expect( testShip.previousPort ).toBe( null );
     })
 
-    it('should have a currentPort property of Lisbon', () => {
-        expect( testShip.currentPort ).toEqual(lisbon);
+    it('should have a currentPort property of marseilles port object', () => {
+        expect( testShip.currentPort ).toEqual(marseilles);
+    })
+
+    it('currentPort ships should contain this ship on instantiation', () => {
+        expect( testShip.currentPort.ships ).toEqual([testShip]);
     })
 
     it('should have a starting passengerCount property of 0', () => {
@@ -38,11 +48,9 @@ describe('setSail', () => {
     })
 
     it('should set previousPort to currentPort and currentPort to "" when sailing', () => {
-        testShip.currentPort = 'Marseilles'
-
         testShip.setSail();
 
-        expect( testShip.previousPort ).toBe('Marseilles');
+        expect( testShip.previousPort ).toBe(marseilles);
         expect(testShip.currentPort).toBeFalsy();
     })
 })
@@ -58,5 +66,6 @@ describe('dock', () => {
         ship.dock();
 
         expect(ship.currentPort).toEqual(marseilles);
+        expect(ship.currentPort.ships).toEqual([ship]);
     })
 })
