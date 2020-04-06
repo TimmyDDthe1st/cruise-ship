@@ -4,12 +4,10 @@ const Itinerary = require('../src/itinerary');
 
 let lisbon;
 let testItinerary;
-let testShip;
+const testShip = jest.fn();
 
 beforeEach(() => {
     lisbon = new Port('Lisbon');
-    testItinerary = new Itinerary([lisbon]);
-    testShip = new Ship(testItinerary);
     lisbon.removeShip();
 })
 
@@ -36,26 +34,7 @@ describe('constructor', () => {
 describe('addShip', () => {
     it('should add a ship to the port', () => {
         lisbon.addShip(testShip);
-
         expect(lisbon.ships).toEqual([testShip])
-    })
-
-    it('should do nothing if no ship is passed in', () => {
-        lisbon.addShip();
-
-        expect(lisbon.ships).toEqual([])
-    })
-    
-    it('should do nothing if an integer is passed in', () => {
-        lisbon.addShip(5);
-
-        expect(lisbon.ships).toEqual([])
-    })
-
-    it('should do nothing if a string is passed in', () => {
-        lisbon.addShip('blahblah');
-
-        expect(lisbon.ships).toEqual([])
     })
 })
 

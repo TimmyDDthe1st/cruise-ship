@@ -5,13 +5,7 @@ class Port {
     }
 
     addShip(ship) {
-        if(ship === null || ship === undefined) {
-            return;
-        }
-
-        if(ship instanceof Object) {
-            this.ships.push(ship);
-        }
+        this.ships.push(ship);
     }
 
     removeShip() {
