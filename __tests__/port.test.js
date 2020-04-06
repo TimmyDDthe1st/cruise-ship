@@ -1,9 +1,6 @@
 const Port = require('../src/port');
-const Ship = require('../src/ship');
-const Itinerary = require('../src/itinerary');
 
 let lisbon;
-let testItinerary;
 const testShip = jest.fn();
 
 beforeEach(() => {
@@ -34,7 +31,7 @@ describe('constructor', () => {
 describe('addShip', () => {
     it('should add a ship to the port', () => {
         lisbon.addShip(testShip);
-        
+
         expect(lisbon.ships).toEqual([testShip])
     })
 })
