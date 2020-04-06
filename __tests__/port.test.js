@@ -2,20 +2,24 @@ const Port = require('../src/port');
 const Ship = require('../src/ship');
 const Itinerary = require('../src/itinerary');
 
-let testPort;
+let lisbon;
+let testItinerary;
+let testShip;
 
 beforeEach(() => {
-    testPort = new Port('Lisbon');
-    testPort.ships = [];
+    lisbon = new Port('Lisbon');
+    testItinerary = new Itinerary([lisbon]);
+    testShip = new Ship(testItinerary);
+    lisbon.removeShip();
 })
 
 describe('constructor', () => {
     it('should create a new object', () => {
-        expect( testPort ).toBeInstanceOf(Object);
+        expect( lisbon ).toBeInstanceOf(Object);
     })
 
     it('should have a name', () => {
-        expect( testPort.name ).toBeTruthy();
+        expect( lisbon.name ).toBeTruthy();
     })
 
     it('should have a name of "Unknown Port" when not specified', () => {
@@ -24,44 +28,42 @@ describe('constructor', () => {
         expect( unknownPort.name ).toBe( 'Unknown Port' );
     })
 
-    it('should have a ships property set to an empty array', () => {
-        expect(testPort.ships).toEqual([]);
+    it('should have a ships property set to initial ship', () => {
+        expect(lisbon.ships).toEqual([]);
     })
 })
 
 describe('addShip', () => {
     it('should add a ship to the port', () => {
-        const itinerary = new Itinerary([testPort]);
-        const ship = new Ship(itinerary);
+        lisbon.addShip(testShip);
 
-        testPort.addShip(ship);
-
-        expect(testPort.ships).toEqual([ship, ship])
+        expect(lisbon.ships).toEqual([testShip])
     })
 
     it('should do nothing if no ship is passed in', () => {
-        testPort.addShip();
+        lisbon.addShip();
 
-        expect(testPort.ships).toEqual([])
+        expect(lisbon.ships).toEqual([])
     })
     
     it('should do nothing if an integer is passed in', () => {
-        testPort.addShip(5);
+        lisbon.addShip(5);
 
-        expect(testPort.ships).toEqual([])
+        expect(lisbon.ships).toEqual([])
     })
 
     it('should do nothing if a string is passed in', () => {
-        testPort.addShip('blahblah');
+        lisbon.addShip('blahblah');
 
-        expect(testPort.ships).toEqual([])
+        expect(lisbon.ships).toEqual([])
     })
 })
 
 describe('removeShip', () => {
     it('should remove a ship to the port', () => {
-        testPort.removeShip();
+        lisbon.addShip(testShip);
+        lisbon.removeShip();
 
-        expect(testPort.ships).toEqual([])
+        expect(lisbon.ships).toEqual([])
     })
 })
