@@ -1,9 +1,14 @@
 const Itinerary = require('../src/itinerary');
 const Port = require('../src/port');
+
 let testItinerary;
+let marseilles;
+let nice;
 
 beforeEach(() => {
-    testItinerary = new Itinerary();
+    marseilles = new Port('Marseilles');
+    nice = new Port('Nice');
+    testItinerary = new Itinerary([marseilles, nice]);
 })
 
 describe('constructor', () => {
@@ -12,21 +17,12 @@ describe('constructor', () => {
     })
 
     it('should have a ports property', () => {
-        expect( testItinerary.ports ).toBeFalsy();
+        expect( testItinerary.ports ).toBeTruthy();
     })
 })
 
 describe('ports', () => {
     it('should have an array of port objects', () => {
-        const marseilles = new Port('Marseilles');
-        const nice = new Port('Nice');
-
-        testItinerary.ports = [marseilles, nice];
-
         expect( testItinerary.ports ).toEqual([marseilles, nice]);
-    })
-
-    it('should have a ports property', () => {
-        expect( testItinerary.ports ).toBeFalsy();
     })
 })
