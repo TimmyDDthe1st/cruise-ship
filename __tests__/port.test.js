@@ -34,6 +34,7 @@ describe('constructor', () => {
 describe('addShip', () => {
     it('should add a ship to the port', () => {
         lisbon.addShip(testShip);
+        
         expect(lisbon.ships).toEqual([testShip])
     })
 })

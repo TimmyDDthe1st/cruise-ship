@@ -11,7 +11,6 @@ class Port {
     removeShip() {
         this.ships.pop();
     }
-
 }
 
 module.exports = Port;
