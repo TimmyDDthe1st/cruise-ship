@@ -14,7 +14,7 @@ beforeEach(() => {
     nice = new Port('Nice');
     genoa = new Port('Genoa')
     livorno = new Port('Livorno');
-    testItinerary = new Itinerary([marseilles, nice, genoa]);
+    testItinerary = new Itinerary([marseilles, nice, genoa, livorno]);
     testShip = new Ship(testItinerary);
 });
 
@@ -57,15 +57,10 @@ describe('setSail', () => {
 
 describe('dock', () => {
     it('should be able to dock at a different port', () => {
-        const lisbon = new Port('Lisbon');
-        const marseilles = new Port('Marseilles');
-        const itinerary = new Itinerary([lisbon, marseilles]);
-        const ship = new Ship(itinerary);
+        testShip.setSail();
+        testShip.dock();
 
-        ship.setSail();
-        ship.dock();
-
-        expect(ship.currentPort).toEqual(marseilles);
-        expect(ship.currentPort.ships).toEqual([ship]);
+        expect(testShip.currentPort).toEqual(nice);
+        expect(testShip.currentPort.ships).toEqual([testShip]);
     })
 })
