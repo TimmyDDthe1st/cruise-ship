@@ -7,12 +7,10 @@ class Ship {
         this.itinerary.ports[0].addShip(this);
     }
 
-    setSail() {
-        const itinerary = this.itinerary;
-        const currentPortIndex = itinerary.ports.indexOf(this.currentPort);
-
-        itinerary.ports[currentPortIndex].removeShip();
+    setSail() {            
         this.previousPort = this.currentPort;
+        this.previousPort.removeShip(this);
+    
         this.currentPort = null;
     }
 

@@ -10,11 +10,24 @@ let genoa;
 let livorno;
 
 beforeEach(() => {
-    marseilles = new Port('Marseilles');
-    nice = new Port('Nice');
-    genoa = new Port('Genoa')
-    livorno = new Port('Livorno');
-    testItinerary = new Itinerary([marseilles, nice, genoa, livorno]);
+    const port = {
+        addShip: jest.fn(),
+        removeShip: jest.fn()
+    };
+
+    marseilles = {
+        ...port,
+        name: 'Marseilles',
+        ships: []
+    };
+
+    nice = {
+        ...port,
+        name: 'Nice',
+        ships:[]
+    };
+
+    testItinerary = new Itinerary([marseilles, nice]);
     testShip = new Ship(testItinerary);
 });
 
@@ -31,12 +44,12 @@ describe('constructor', () => {
         expect( testShip.currentPort ).toEqual(marseilles);
     })
 
-    it('currentPort ships should contain this ship on instantiation', () => {
-        expect( testShip.currentPort.ships ).toEqual([testShip]);
-    })
-
     it('should have a starting passengerCount property of 0', () => {
         expect( testShip.passengerCount ).toBe( 0 );
+    })
+
+    it('should be added to the first port on instantiation', () => {
+        expect(marseilles.addShip).toHaveBeenCalledWith(testShip);
     })
 })
 
@@ -50,17 +63,20 @@ describe('setSail', () => {
     it('should set previousPort to currentPort and currentPort to "" when sailing', () => {
         testShip.setSail();
 
-        expect( testShip.previousPort ).toBe(marseilles);
         expect(testShip.currentPort).toBeFalsy();
+        expect( testShip.previousPort.removeShip ).toHaveBeenCalledWith(testShip);
     })
 })
 
 describe('dock', () => {
     it('should be able to dock at a different port', () => {
-        testShip.setSail();
-        testShip.dock();
+        const itinerary = new Itinerary([marseilles, nice]);
+        const ship = new Ship(itinerary);
 
-        expect(testShip.currentPort).toEqual(nice);
-        expect(testShip.currentPort.ships).toEqual([testShip]);
+        ship.setSail();
+        ship.dock();
+
+        expect(ship.currentPort).toEqual(nice);
+        expect(ship.currentPort.addShip).toHaveBeenCalledWith(ship);
     })
 })
