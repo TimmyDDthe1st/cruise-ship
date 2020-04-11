@@ -1,13 +1,9 @@
 const Ship = require('../src/ship');
-const Port = require('../src/port');
-const Itinerary = require('../src/itinerary');
 
 let testItinerary;
 let testShip;
 let marseilles;
 let nice;
-let genoa;
-let livorno;
 
 beforeEach(() => {
     const port = {
@@ -27,7 +23,10 @@ beforeEach(() => {
         ships:[]
     };
 
-    testItinerary = new Itinerary([marseilles, nice]);
+    testItinerary = {
+        ports: [marseilles, nice]
+    };
+
     testShip = new Ship(testItinerary);
 });
 
@@ -70,13 +69,10 @@ describe('setSail', () => {
 
 describe('dock', () => {
     it('should be able to dock at a different port', () => {
-        const itinerary = new Itinerary([marseilles, nice]);
-        const ship = new Ship(itinerary);
+        testShip.setSail();
+        testShip.dock();
 
-        ship.setSail();
-        ship.dock();
-
-        expect(ship.currentPort).toEqual(nice);
-        expect(ship.currentPort.addShip).toHaveBeenCalledWith(ship);
+        expect(testShip.currentPort).toEqual(nice);
+        expect(testShip.currentPort.addShip).toHaveBeenCalledWith(testShip);
     })
 })
